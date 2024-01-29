@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- App favicon -->
+    <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="assets/morris/morris.css">
+
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="assets/js/modernizr.min.js"></script>
+    <!-- Page level plugin CSS-->
+    <link href="assets/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="assets/css/sb-admin.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="views/views.css" type="text/css" />
+    <link rel="stylesheet" href="main/app.css" type="text/css" />
+
+</head>
+
+<body class="body" onresize="views.resize()">
+    <img id="busyUIElement" src="assets/img/busy.svg" class="inactive">
+    <div id="lds-spinner" class="inactive">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div>
+        <h3 id='error-msg'></h3>
+    </div>
+
+    <!-- Navigation Bar-->
+    <header id="topnav">
+        <div class="topbar-main">
+            <div class="container-fluid">
+
+                <!-- Logo container-->
+                <div class="logo">
+                    <!-- Image Logo -->
+                    <a href="index.html" class="logo">MATTORIS SUPERMARKET
+                    </a>
+
+                </div>
+                <!-- End Logo container-->
+
+                <div class="menu-extras topbar-custom">
+
+                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+
+                        <li class="menu-item">
+                            <!-- Mobile menu toggle-->
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
+                        <li class="hide-phone">
+                            <!-- <form class="app-search">
+                                <input type="text" placeholder="Search..." class="form-control">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form> -->
+                        </li>
+                        <li>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end menu-extras -->
+
+                <div class="clearfix"></div>
+
+            </div> <!-- end container -->
+        </div>
+        <!-- end topbar-main -->
+
+        <div id='navbar-custom' class="navbar-custom">
+            <div class="container-fluid m-auto">
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <!-- <li class="has-submenu">
+                            <a><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        </li> -->
+                        <!-- <li class="has-submenu" onclick="product.loadProduct()">
+                            <a><i class="fa fa-shopping-bag"></i> <span> Products </span> </a>
+                        </li> -->
+                        <li class="has-submenu" onclick="order.loadOrders()">
+                            <a><i class="fa fa-shopping-cart"></i> <span> Orders </span> </a>
+                        </li>
+                        <!-- <li class="has-submenu active" onclick="merchant.loadMerchant()">
+                            <a><i class="fa fa-user"></i> <span> Merchants </span> </a>
+                        </li> -->
+                        <li class="has-submenu" onclick="shopper.loadShoppers()">
+                            <a><i class="fa fa-shopping-basket"></i> <span> Shoppers </span> </a>
+                        </li>
+                        <!-- <li class="has-submenu" onclick="courier.loadCouriers()">
+                            <a><i class="fa fa-truck"></i> <span> Couriers </span> </a>
+                        </li> -->
+                        <li class="has-submenu" onclick="driver.loadDrivers()">
+                            <a><i class="fa fa-users"></i> <span> Drivers </span> </a>
+                        </li>
+                        <!-- <li class="has-submenu" onclick="staff.loadStaffs()">
+                            <a><i class="fa fa-users"></i> <span> Staffs </span> </a>
+                        </li> -->
+                        <!-- <li class="has-submenu" onclick="category.loadCategory()">
+                            <a><i class="fa fa-archive"></i> <span> Category </span> </a>
+                        </li> -->
+                        <li class="has-submenu" onclick="insight.loadInsight()">
+                            <a><i class="fa fa-dot-circle-o"></i> <span> Insight </span> </a>
+                        </li>
+                        <li class="has-submenu pull-right" onclick="project.doLogout()">
+                            <a><i class="fa fa-sign-out"></i> <span> Logout </span> </a>
+                        </li>
+                    </ul>
+                    <!-- End navigation menu -->
+                </div> <!-- end #navigation -->
+            </div> <!-- end container -->
+        </div> <!-- end navbar-custom -->
+    </header>
+    <!-- End Navigation Bar-->
+    <div class="wrapper">
+        <div id="UIViews" class="container-fluid">
+            <div></div>
+            <div id="loginUiView" class="wrapper-page">
+                <div class="text-center">
+                    <a href="#" class="logo"><span>Mattoris Supermarket</span></a>
+                    <h5 class="text-muted mt-0 font-600">Admin Dashboard</h5>
+                </div>
+                <div class="m-t-40 card-box">
+                    <div class="text-center">
+                        <h4 class="text-uppercase font-bold mb-0">Sign In</h4>
+                    </div>
+                    <div class="p-20">
+                        <div class="form-horizontal m-t-20" action="index.html">
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input id='staffemail' class="form-control" type="text" required="" placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input id='staffpassword' class="form-control" type="password" required=""
+                                        placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <div class="checkbox checkbox-custom">
+                                        <input id="checkbox-signup" type="checkbox">
+                                        <label for="checkbox-signup">
+                                            Remember me
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center m-t-30">
+                                <div class="col-xs-12">
+                                    <button onclick="project.doLogin()" class="btn btn-custom btn-bordred btn-block waves-effect waves-light"
+                                        type="submit">Log
+                                        In</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div id="merchantUIView" class="view">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#merchantmodal">
+                                <i class="fa fa-plus"></i> Add Merchants
+                            </button>
+                        </div>
+                        <h4 class="page-title">Merchants</h4>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Merchants List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Merchant Name</th>
+                                            <th>State</th>
+                                            <th>City</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='merchantTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+
+            </div>  -->
+
+            <div id="categoryUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categorymodal">
+                                <i class="fa fa-plus"></i> Add Category
+                            </button>
+                        </div>
+                        <h4 class="page-title">Category</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Category List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Category</th>
+                                            <th>Created By</th>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='categoryTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="insightUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categorymodal">
+                                <i class="fa fa-plus"></i> Add Category
+                            </button>
+                        </div> -->
+                        <h4 class="page-title">Insight</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h6 class="header-title mt-0 m-b-30">Lost Request</h6>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Issue ID</th>
+                                            <th>Time</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <td>Requested Item</td>
+                                            <!-- <td>Status</td> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id='lostRequestTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="staffUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staffmodal">
+                                <i class="fa fa-plus"></i> Add Staffs
+                            </button>
+                        </div>
+                        <h4 class="page-title">Staffs</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Staff List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Staff Name</th>
+                                            <th>Is Admin</th>
+                                            <td>Email</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='staffTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="orderUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" onclick='order.exportOrderDataDelivery({ filename: "vendee-export-delivery-" + new Date().getTime() });'>
+                                <i class="fa fa-file-export"></i> Export : Orders for Delivery
+                            </button>
+                        </div>
+                        <h4 class="page-title">Orders</h4>
+
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+
+                            <h4 class="header-title mt-0 m-b-30">Orders List</h4>
+                            <!-- 
+                            <button onclick="order.exportDeliveryOrders()" class="btn btn-custom btn-bordred btn-block waves-effect waves-light"
+                                type="submit"> Export : Orders for Delivery</button> -->
+
+                            <!-- <a href='#' onclick='order.exportOrderDataDelivery({ filename: "vendee-delivery-" + new Date().getTime() });'>Download CSV</a> -->
+
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <!-- <th>Product Name</th> -->
+                                            <!-- <th>Quantity</th> -->
+                                            <th>Parcel ID</th>
+                                            <th>Email</th>
+                                            <th>Phone Number </th>
+                                            <th>Address </th>
+                                            <th>Shipping Method</th>
+                                            <th>Time Slot</th>
+                                            <th>Driver ID</th>
+                                            <!-- <th>Shopper ID</th> -->
+                                            <!-- <th>Amount </th> -->
+                                            <th>Status </th>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='orderTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="courierUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#couriermodal">
+                                <i class="fa fa-plus"></i> Add Couriers
+                            </button>
+                        </div>
+                        <h4 class="page-title">Couriers</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Courier List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Company Name</th>
+                                            <th>Company Address</th>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='courierTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="driverUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#drivermodal">
+                                <i class="fa fa-plus"></i> Add Drivers
+                            </button>
+                        </div> -->
+                        <h4 class="page-title">Drivers</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Driver List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Driver Reference Number</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Phone Number</th>
+                                            <!-- <td>Action</td> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id='driverTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="shopperUIView" class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shoppermodal">
+                                <i class="fa fa-plus"></i> Add Shoppers
+                            </button> -->
+                        </div>
+                        <h4 class="page-title">Shoppers</h4>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Shoppers List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Shopper Ref. Number</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Phone Number</th>
+                                            <th>Company Name</th>
+                                            <!-- <td>Action</td> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id='shopperTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+            <div id="productUIView" class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-20">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" onclick="product.showProductModal(this)">
+                                <i class="fa fa-plus"></i> Add Products
+                            </button>
+                        </div>
+                        <h4 class="page-title">Products</h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <div class="card-box">
+
+                            <h4 class="header-title mt-0 m-b-30">Product List</h4>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Category</th>
+                                            <th>Title</th>
+                                            <th>Price</th>
+                                            <th>Marchant Name</th>
+                                            <th>Pickup Availability</th>
+                                            <th>Product Availability</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='productTable'>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                </div>
+            </div>
+
+        </div>
+        <!-- end wrapper -->
+
+
+        <!-- MerchantModal starts here -->
+        <div class="modal fade" id="merchantmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h2" id="exampleModalLongTitle">Add Merchant</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="merchantcreateformName">Merhcnat Name</label>
+                                    <input type="name" class="form-control" id="merchantcreateformName" placeholder="Enter Merchant Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="merchantcreateformState">State</label>
+                                    <input type="name" class="form-control" id="merchantcreateformState" placeholder="Enter State(Lagos)">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="merchantcreateformCity">City</label>
+                                    <input type="name" class="form-control" id="merchantcreateformCity" placeholder="Enter City Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="merchantcreateformAddress">Address</label>
+                                    <input type="name" class="form-control" id="merchantcreateformAddress" placeholder="Enter Address">
+                                </div>
+                                <button onclick="merchant.createMerchant()" class="btn btn-success incButton">Add</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Merchant</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" onclick="merchant.deleteMerchant()" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Merchants</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div id='merchantFormName' class="form-group col-md-12">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div id='merchantFormState' class="form-group col-md-12">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div id='merchantFormCity' class="form-group col-md-12">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div id='merchantFormAddress' class="form-group col-md-12">
+                                    </div>
+                                </div>
+                                <button onclick="merchant.editMerchant()" class="btn btn-success incButton"><i class="fa fa-edit"></i>
+                                    Done
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--MerchantModal ends here-->
+
+
+        <!--Category modal-->
+        <div class="modal fade" id="categorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Add Category</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="categorycreateformName">Category Name</label>
+                                    <input type="name" class="form-control" id="categorycreateformName" placeholder="Enter Category Name">
+                                </div>
+                                <button onclick="category.createCategory()" type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deletecategorymodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Category</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" onclick="category.deleteCategory()" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editcategorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Category</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div id='categoryName' class="form-group col-md-12">
+                            </div>
+                            <button type="submit" onclick="category.editCategory()" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Category modal-->
+        <!--Order modal-->
+        <div class="modal fade" id="editordermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Order</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div id='orderEditStatus' class="form-group col-md-12">
+                            </div>
+                            <div id='orderEditDriverRef' class="form-group col-md-12">
+                            </div>
+                            <button type="submit" onclick="order.editOrder()" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Order Details</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity </th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='orderProductsTable'>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Order modal-->
+        <!--Courier modal-->
+        <div class="modal fade" id="couriermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Add Courier</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="couriercreateformName">Company Name</label>
+                                    <input type="name" class="form-control" id="couriercreateformName" placeholder="Enter Company Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="couriercreateformAddress">Company Address</label>
+                                    <input type="name" class="form-control" id="couriercreateformAddress" placeholder="Enter Company Address">
+                                </div>
+                                <button onclick="courier.createCourier()" type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deletecouriermodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Courier</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" onclick="courier.deleteCourier()" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editcouriermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Courier</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div id='courierEditName' class="form-group col-md-12">
+                            </div>
+                            <div id='courierAddressName' class="form-group col-md-12">
+                            </div>
+                            <button type="submit" onclick="courier.editCourier()" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Courier modal-->
+
+        <!--Driver modal-->
+        <div class="modal fade" id="drivermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Add Driver</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="driverfirstName">Driver FirstName</label>
+                                    <input type="name" class="form-control" id="driverfirstName" placeholder="Enter Driver First Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="driverlastName">Driver LastName</label>
+                                    <input type="name" class="form-control" id="driverlastName" placeholder="Enter Driver Last Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="driverphoneNumber">Driver Phone Number</label>
+                                    <input type="name" class="form-control" id="driverphoneNumber" placeholder="Enter Driver Phone Number">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="driverefNumber">Enter Ref Number</label>
+                                    <input type="name" class="form-control" id="driverefNumber" placeholder="Enter Ref Number">
+                                </div>
+                                <button onclick="driver.createDriver()" type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deletedrivermodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Driver</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" onclick="driver.deleteDriver()" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editdrivermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Driver</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div id='driverEditfirstName' class="form-group col-md-12">
+                            </div>
+                            <div id='driverEditlastName' class="form-group col-md-12">
+                            </div>
+                            <div id='driverEditphoneNumber' class="form-group col-md-12">
+                            </div>
+                            <button type="submit" onclick="driver.editDriver()" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Driver modal-->
+
+        <!--Shopper modal-->
+        <div class="modal fade" id="shoppermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Add Shoppers</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="shopperfirstName">Shopper FirstName</label>
+                                    <input type="name" class="form-control" id="shopperfirstName" placeholder="Enter Shopper First Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="shopperlastName">Shopper LastName</label>
+                                    <input type="name" class="form-control" id="shopperlastName" placeholder="Enter Shopper Last Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="shopperphoneNumber">Shopper Phone Number</label>
+                                    <input type="name" class="form-control" id="shopperphoneNumber" placeholder="Enter Driver Phone Number">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="shoppercompanyName">Shopper Company Name</label>
+                                    <input type="name" class="form-control" id="shoppercompanyName" placeholder="Enter Company Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="shopperefNumber">Enter Ref Number</label>
+                                    <input type="name" class="form-control" id="shopperefNumber" placeholder="Enter Ref Number">
+                                </div>
+                                <button onclick="shopper.createShopper()" type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteshoppermodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Shopper</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" onclick="shopper.deleteShopper()" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editshoppermodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Shopper</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div id='shopperEditfirstName' class="form-group col-md-12">
+                            </div>
+                            <div id='shopperEditlastName' class="form-group col-md-12">
+                            </div>
+                            <div id='shopperEditphoneNumber' class="form-group col-md-12">
+                            </div>
+                            <div id='shopperEditcompanyName' class="form-group col-md-12">
+                            </div>
+                            <button type="submit" onclick="shopper.editShopper()" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ends Shopper modal-->
+
+
+        <!--Product Modal starts here-->
+
+        <div class="modal fade" id="productmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title h2" id="exampleModalLongTitle">Add Products</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="producttitle">Title</label>
+                                    <input type="name" class="form-control" id="crproducttitle" placeholder="Product Title">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="productprice">Price</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">₦</div>
+                                        </div>
+                                        <input type="text" class="form-control" id="crproductprice" placeholder="Product Price">
+                                    </div>
+                                </div>
+                                <div id='crProductMerchantName' class="form-group col-md-12">
+
+                                </div>
+                                <div id='crProductCategory' class="form-group col-md-12">
+
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="productPickupstatus"> Pickup Availability: </label>
+                                    <div class="custom-control custom-radio custom-control-inline ">
+                                        <input type="radio" checked id="crproductavailable" value='true' name="crproductRadio"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="crproductavailable">Available</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline custom-radio-danger">
+                                        <input type="radio" id="crproductnotavailable" value='false' name="crproductRadio"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label" for="crproductnotavailable">Not Available</label>
+                                    </div>
+                                    <div class="custom-file col-md-12">
+                                        <input type="file" class="custom-file-input" id="crproductfile" onchange='product.preview_image_cr(event)'
+                                            required>
+                                        <label class="custom-file-label" for="file">Upload Product
+                                            Image...</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id='productCreateImageView' class='form-row'>
+                            </div>
+                            <button onclick="product.createProduct()" type="submit" class="btn btn-success">Add</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteproductmodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Product</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input onclick="product.deleteProduct()" type="submit" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editproductmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Products</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div class="form-row">
+                                <div id='productName' class="form-group col-md-12">
+
+                                </div>
+                                <div id='productPrice' class="form-group col-md-12">
+
+                                </div>
+                                <div id='productmerchName' class="form-group col-md-12">
+
+                                </div>
+                                <div id='productcateditName' class="form-group col-md-12"></div>
+
+                                <div id='productPickup' class="form-group col-md-12">
+
+                                </div>
+                                <div id='productAvailable' class="form-group col-md-12">
+
+                                </div>
+                                <div id='productEditImage' class="form-group col-md-12">
+                                </div>
+                                <div id='productEditImageView' class='form-row'>
+                                </div>
+                            </div>
+                            <button onclick="product.editProduct()" type="submit" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Product modal ends here-->
+        <!--Staff Modal starts here-->
+
+        <div class="modal fade" id="staffmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title h2" id="exampleModalLongTitle">Add Staffs</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="staffname">Name</label>
+                                    <input type="name" class="form-control" id="staffname" placeholder="Staff Name">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="staffemail">Email</label>
+                                    <input type="email" class="form-control" id="staffemail" placeholder="Staff Email">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="staffpassword">Password</label>
+                                    <input type="name" class="form-control" id="staffpassword" placeholder="Staff Password">
+                                </div>
+                            </div>
+                            <button onclick="staff.createStaff()" type="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deletestaffmodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Staff</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete these Records?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input onclick="staff.deleteStaff()" type="submit" class="btn btn-danger" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editstaffmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editor-title">Edit Staffs</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group required">
+                            <div class="form-row">
+                                <div id='staffEditName' class="form-group col-md-12">
+
+                                </div>
+                                <div id='staffEditEmail' class="form-group col-md-12">
+
+                                </div>
+                                <div id='staffEditIsAdmin' class="form-group col-md-12">
+
+                                </div>
+                                <div id='staffEditPassword' class="form-group col-md-12">
+
+                                </div>
+
+                            </div>
+                            <button onclick="staff.editStaff()" type="submit" class="btn btn-success"><i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Staff modal ends here-->
+        <!-- Footer -->
+        <!-- <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        2016 - 2018 © Adminto. Coderthemes.com
+                    </div>
+                </div>
+            </div>
+        </footer> -->
+        <!-- End Footer -->
+
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/moment.js"></script>
+
+
+        <!-- KNOB JS -->
+        <!--[if IE]>
+        <script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+        <![endif]-->
+        <!-- <script src="assets/plugins/jquery-knob/jquery.knob.js"></script> -->
+
+        <!--Morris Chart-->
+        <script src="assets/morris/morris.min.js"></script>
+        <!-- <script src="assets/raphael/raphael-min.js"></script> -->
+
+        <!-- Dashboard init -->
+        <script src="assets/pages/jquery.dashboard.js"></script>
+
+
+
+
+        <!-- App js -->
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+
+
+
+        <!-- Page level plugin JavaScript
+        <script src="assets/datatables/jquery.dataTables.js"></script>
+        <script src="assets/datatables/dataTables.bootstrap4.js"></script>
+
+    
+        <script src="assets/js/sb-admin.min.js"></script>
+
+   
+        <script src="assets/js/demo/datatables-demo.js"></script>-->
+        <!--custom views -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBNdl87TEwJIbjpyGENr3FNMo1Pa_sXgEg"></script>
+        <script src="main/project.js"></script>
+        <script src="main/product.js"></script>
+        <script src="main/events.js"></script>
+        <script src="main/category.js"></script>
+        <script src="main/courier.js"></script>
+        <script src="main/merchant.js"></script>
+        <script src="main/shopper.js"></script>
+        <script src="main/staff.js"></script>
+        <script src="main/order.js"></script>
+        <script src="main/driver.js"></script>
+        <script src="main/insight.js"></script>
+        <script src="views/gsap/css.js"></script>
+        <script src="views/gsap/scrollto.js"></script>
+        <script src="views/gsap/easepack.js"></script>
+        <script src="views/gsap/tweenlite.js"></script>
+        <script src="views/views.js"></script>
+
+        <script src="main/app.js"></script>
+        <script>$(".navigation-menu li").click(function () {
+
+                $(".navigation-menu li.active").removeClass("active");
+                $(this).addClass("active");
+            }); $("li").hover(
+                function () {
+                    $(this).addClass('hover');
+                },
+                function () {
+                    $(this).removeClass('hover');
+                }
+            );</script>
+
+        <!-- Array to Excel converter -->
+        <!-- <script src="assets/js/xls-export.js"></script> -->
+
+</body>
+
+</html>

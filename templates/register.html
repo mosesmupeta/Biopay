@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="POST" action="/register" id="registration-form">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+        <br>
+        <div id="video-container">
+            <video id="video" width="320" height="240" autoplay></video>
+        </div>
+        <br>
+        <button id="capture-button">Capture Face</button>
+        <button type="button" id="reset-button">Reset</button>
+        <br>
+        <div id="captured-images">
+            <!-- Captured images will be displayed here -->
+        </div>
+        <input type="hidden" name="face_images" id="face-images" required>
+        <br>
+        <input type="submit" value="Register">
+    </form>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const captureButton = document.getElementById('capture-button');
+        const resetButton = document.getElementById('reset-button');
+        const capturedImagesDiv = document.getElementById('captured-images');
+        const faceImagesInput = document.getElementById('face-images');
+
+        const capturedImages = [];
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(error) {
+                console.error('Error accessing the webcam:', error);
+            });
+
+        captureButton.addEventListener('click', function() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const capturedImageData = canvas.toDataURL('image/jpeg');
+
+            // Add captured image to the list
+            capturedImages.push(capturedImageData);
+
+            // Display the captured image
+            const img = document.createElement('img');
+            img.src = capturedImageData;
+            capturedImagesDiv.appendChild(img);
+        });
+
+        resetButton.addEventListener('click', function() {
+            // Reset captured images
+            capturedImages.length = 0;
+            capturedImagesDiv.innerHTML = '';
+        });
+
+        document.getElementById('registration-form').addEventListener('submit', function(event) {
+            // Check if at least 3 images are captured
+            if (capturedImages.length < 3) {
+                alert('Please capture at least 3 face images from different angles during registration.');
+                event.preventDefault(); // Prevent form submission
+            } else {
+                // Set the captured images as the value of the hidden input field
+                faceImagesInput.value = JSON.stringify(capturedImages);
+            }
+        });
+    </script>
+</body>
+</html>
